@@ -1,4 +1,4 @@
-#include "SendMesg.h"
+#include "ClientSock.h"
 
 using std::cout;
 using std::endl;
@@ -6,8 +6,14 @@ using std::string;
 
 const char* local_ip = "127.0.0.1";
 
+ClientSock::ClientSock() {
+}
+
+ClientSock::~ClientSock() {
+}
+
 //向服务端发送消息
-string SendMesg(string& s_mesg_send) {
+string ClientSock::SendMesg(string& s_mesg_send) {
     cout<<"Mesg to Server:"<<endl;
     cout<<s_mesg_send<<endl;
     string s_mesg_receive;
@@ -39,7 +45,7 @@ string SendMesg(string& s_mesg_send) {
     return s_mesg_receive;
 }
 
-ssize_t my_read(int fd, char* ptr) {
+ssize_t ClientSock::my_read(int fd, char* ptr) {
     static int read_cnt = 0;
     static char* read_ptr;
     static char read_buf[MAXLINE];
@@ -59,7 +65,7 @@ ssize_t my_read(int fd, char* ptr) {
 }
 
 //将消息写入socket
-ssize_t writen(int fd, const void* vptr, size_t n) {
+ssize_t ClientSock::writen(int fd, const void* vptr, size_t n) {
     size_t nleft;
     ssize_t nwritten;
     const char* ptr;
@@ -75,7 +81,7 @@ ssize_t writen(int fd, const void* vptr, size_t n) {
 }
 
 //从socket读取消息
-ssize_t readline(int fd, void* vptr, size_t maxlen) {
+ssize_t ClientSock::readline(int fd, void* vptr, size_t maxlen) {
     ssize_t n, rc;
     char c, *ptr;
     

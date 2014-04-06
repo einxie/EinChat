@@ -1,6 +1,5 @@
 #include <QtGui>
 #include "EinClient.h"
-#include "SendMesg.cpp"
 #include <iostream>
 using std::string;
 using std::cout;
@@ -66,7 +65,7 @@ void EinClient::SendClicked() {
     m_mesg_change = m_mesg_send.toStdString();
     cout<<"UI Send Mesg:"<<endl;
     cout<<m_mesg_change<<endl;
-    SendMesg(m_mesg_change);
+    m_client_sock.SendMesg(m_mesg_change);
     m_mesg_disp = m_mesg_send;
     p_mesg_disp->append(m_mesg_disp);
 }

@@ -1,8 +1,8 @@
 #ifndef EINCLIENT_H
 #define EINCLIENT_H
 #include <QDialog>
-
 #include <string>
+#include "ClientSock.h"
 using std::string;
 
 //对应控件的前置声明类
@@ -38,6 +38,7 @@ private:
 
 public:
     string m_mesg_change;
+    ClientSock m_client_sock;
 };
 
 #endif

@@ -1,8 +1,8 @@
 bin = EinServer
-obj = EinServer.o
+obj = EinServer.o ServerSock.o
 $(bin) : $(obj)
 	g++ -o $(bin) $(obj)
-$(obj) :
+$(obj) : ServerSock.h
 
 .PHONY : clean
 clean :
