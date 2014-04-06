@@ -30,8 +30,7 @@ void ServerSock::str_echo(int sockfd) {
     char buf[MAXLINE];
 
     while((n = read(sockfd, buf, MAXLINE)) > 0) {
-        cout<<"Receive Mesg on Sever:"<<endl;
-        cout<<buf<<endl;
+        cout<<"Server Receive Mesg:"<<buf<<endl;
         buf[n] = '\0';
         writen(sockfd, buf, n + 1);
     }

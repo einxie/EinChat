@@ -6,17 +6,18 @@ using std::string;
 
 const char* local_ip = "127.0.0.1";
 
-ClientSock::ClientSock() {
+ClientSock::ClientSock() : m_disp_set_callback(0) {
 }
 
 ClientSock::~ClientSock() {
 }
 
 //向服务端发送消息
-string ClientSock::SendMesg(string& s_mesg_send) {
+void ClientSock::SendMesg(string s_mesg_send, SET_CALLBACK m_set_callback) {
+	m_disp_set_callback = m_set_callback;
     cout<<"Mesg to Server:"<<endl;
     cout<<s_mesg_send<<endl;
-    string s_mesg_receive;
+
     int sockfd;
     struct sockaddr_in servaddr;
 
@@ -27,22 +28,32 @@ string ClientSock::SendMesg(string& s_mesg_send) {
     inet_pton(AF_INET, local_ip, &servaddr.sin_addr);
     connect(sockfd, (SA*)&servaddr, sizeof(servaddr));
 
-    char recv_mesg[MAXLINE];
-    while(s_mesg_send != "") {
-        const char* send_mesg = s_mesg_send.c_str();
-        writen(sockfd, send_mesg, strlen(send_mesg));
-        if(readline(sockfd, recv_mesg, MAXLINE) == 0) {
-            cout<<"Receive Error"<<endl;
-            return "";
-        }
-        cout<<"Now Recive Mesg:"<<endl;
-        cout<<recv_mesg<<endl;
-        s_mesg_send = "";
-        s_mesg_receive = send_mesg;
+    if("" == s_mesg_send) {
+    	close(sockfd);
+    	return;
     }
 
+	const char* send_mesg = s_mesg_send.c_str();
+	writen(sockfd, send_mesg, strlen(send_mesg));
+
+    char recv_mesg[MAXLINE];
+    RecvMesg(sockfd, recv_mesg);
+
     close(sockfd);
-    return s_mesg_receive;
+    return;
+}
+
+void ClientSock::RecvMesg(int fd, char* m_mesg) {
+	string s_mesg_receive = "";
+	if(readline(fd, m_mesg, MAXLINE) == 0) {
+		cout<<"Receive Error"<<endl;
+		m_disp_set_callback(s_mesg_receive);
+		return;
+	}
+	cout<<"Now Receive Mesg:"<<m_mesg<<endl;
+	s_mesg_receive = m_mesg;
+	m_disp_set_callback(s_mesg_receive);
+
 }
 
 ssize_t ClientSock::my_read(int fd, char* ptr) {

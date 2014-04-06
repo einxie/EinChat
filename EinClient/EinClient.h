@@ -16,9 +16,14 @@ class EinClient : public QDialog {
 public:
     EinClient(QWidget* p_parent = 0);
 
+public:
+    //设定显示消息
+    void SetDispMesg(const string m_mesg);
 private:
     //警告信息
     void ErrorMessage(int num);
+    //回调函数
+    static void SetDispMesgCallback(const string m_mesg);
 
 private slots:
     //各按钮对应的槽
@@ -35,10 +40,11 @@ private:
     //存储用户要发送与要显示的消息
     QString m_mesg_disp;
     QString m_mesg_send;
-
-public:
     string m_mesg_change;
+    //网络借口类
     ClientSock m_client_sock;
+
+    static EinClient* p_ein_client;
 };
 
 #endif

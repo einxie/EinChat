@@ -5,10 +5,13 @@ using std::string;
 using std::cout;
 using std::endl;
 
+EinClient* EinClient::p_ein_client;
+
 //对话框的构造函数
 EinClient::EinClient(QWidget* p_parent)
     : QDialog(p_parent), m_mesg_disp(""), m_mesg_send(""),
     m_mesg_change("") {
+	p_ein_client = this;
     //生成标签与文本框
     p_label_disp = new QLabel(tr("Disp"));
     p_label_send = new QLabel(tr("&Mesg"));
@@ -63,11 +66,8 @@ void EinClient::SendClicked() {
     m_mesg_send = p_mesg_send->toPlainText();
     p_mesg_send->setText("");
     m_mesg_change = m_mesg_send.toStdString();
-    cout<<"UI Send Mesg:"<<endl;
-    cout<<m_mesg_change<<endl;
-    m_client_sock.SendMesg(m_mesg_change);
-    m_mesg_disp = m_mesg_send;
-    p_mesg_disp->append(m_mesg_disp);
+    cout<<"UI Send Mesg:"<<m_mesg_change<<endl;
+    m_client_sock.SendMesg(m_mesg_change, SetDispMesgCallback);
 }
 
 //根据消息文本框的内容，更新进程按钮状态
@@ -82,6 +82,18 @@ void EinClient::EnableSendButton() {
         p_send_button->setEnabled(false);
         p_send_button->setToolTip(tr("Please input message!"));
     }
+}
+
+//设定显示消息
+void EinClient::SetDispMesg(const string m_mesg) {
+	m_mesg_disp = m_mesg.c_str();
+	p_mesg_disp->append(m_mesg_disp);
+}
+
+//回调函数
+void EinClient::SetDispMesgCallback(const string m_mesg) {
+	cout<<"UI Receive Mesg:"<<m_mesg<<endl;
+	p_ein_client->SetDispMesg(m_mesg);
 }
 
 //根据错误种类弹出错误提示框
