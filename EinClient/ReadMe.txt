@@ -6,16 +6,16 @@
   
   一：目录组织结构
   EinClient
-  ├── MainWindow.cpp        ->主窗口类的实现
-  ├── MainWindow.h          ->主窗口类的定义
-  ├── Makefile              ->makefile文件，为qmake自动生成
-  ├── ReadMe.txt            ->对本工程的说明文件
-  ├── EinClient             ->最终生成的可执行文件
-  ├── EinClient.cpp         ->主对话框类的实现
-  ├── EinClient.h           ->主对话框类的定义
-  ├── EinClient.pro         ->QT工程文件，qmake自动生成
-  └── TestMainWindow.cpp    ->测试文件(main函数)
-
+  ├── ClientMain.cpp        //主程序
+  ├── ClientSock.cpp        //网络借口类的实现
+  ├── ClientSock.h          //网络借口类的定义
+  ├── EinClient             //生成的可执行文件
+  ├── EinClient.cpp         //主窗口类的实现
+  ├── EinClient.h           //主窗口类的定义
+  ├── EinClient.pro         //QT工程文件，qmake自动生成
+  ├── Makefile
+  └── ReadMe.txt
+  
   二：开发环境搭建
   电脑安装的是GNU/Linux Debian 7。由于Gnome3的桌面环境标题显示与传统样式不大相同，临时安装了xfce4桌面环境进行开发与测试。
   在Debian下搭建开发环境十分方便，在root终端执行如下命令：
@@ -63,5 +63,5 @@
   本工程是在Debian7+Xfce4环境下开发与测试，未进行跨平台测试。
 
   以上
-  2014.03.08
+  2014.05.25
 

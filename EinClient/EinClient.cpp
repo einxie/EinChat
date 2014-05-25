@@ -8,21 +8,22 @@ using std::endl;
 EinClient* EinClient::p_ein_client;
 
 //对话框的构造函数
-EinClient::EinClient(QWidget* p_parent)
-    : QDialog(p_parent), m_mesg_disp(""), m_mesg_send(""),
+EinClient::EinClient()
+    : m_mesg_disp(""), m_mesg_send(""),
     m_mesg_change("") {
 	p_ein_client = this;
+
+	//生成用户姓名树
+	p_name_tree = new QTreeWidget;
+	QString tree_label("name");
+	p_name_tree->setHeaderLabel(tree_label);
+
     //生成标签与文本框
-    p_label_disp = new QLabel(tr("Disp"));
-    p_label_send = new QLabel(tr("&Mesg"));
     p_mesg_disp = new QTextEdit;
     p_mesg_send = new QTextEdit;
     p_mesg_disp->setReadOnly(TRUE);
     p_mesg_disp->setText(m_mesg_disp);
     p_mesg_send->setText(m_mesg_send);
-    //将对应文本框设定为标签的伙伴(buddy)
-    p_label_disp->setBuddy(p_mesg_disp);
-    p_label_send->setBuddy(p_mesg_send);
 
     //生成发送按钮
     p_send_button = new QPushButton(tr("&Send"));
@@ -38,26 +39,23 @@ EinClient::EinClient(QWidget* p_parent)
     connect(p_send_button, SIGNAL(clicked()),
             this, SLOT(SendClicked()));
 
-    //布局第一行控件(显示标签-显示框，发送标签-发送框)
-    QGridLayout* p_top_layout = new QGridLayout;
-    p_top_layout->addWidget(p_label_disp, 0, 0);
-    p_top_layout->addWidget(p_mesg_disp, 0, 1);
-    p_top_layout->addWidget(p_label_send, 1, 0);
-    p_top_layout->addWidget(p_mesg_send, 1, 1);
+    //布局右侧切分窗口(垂直)：第一行->显示 第二行：编辑 第三行：发送按钮
+    QSplitter* p_right_splitter = new QSplitter(Qt::Vertical);
+    p_right_splitter->addWidget(p_mesg_disp);
+    p_right_splitter->addWidget(p_mesg_send);
+    p_right_splitter->addWidget(p_send_button);
+    p_right_splitter->setStretchFactor(0, 1);
 
-    //布局第二行控件(发送按钮一个，用弹簧控制位置)
-    QHBoxLayout* p_bottom_layout = new QHBoxLayout;
-    p_bottom_layout->addStretch(12);
-    p_bottom_layout->addWidget(p_send_button);
-    p_bottom_layout->addStretch(1);
+    //布局主切分窗口(两列控件，水平布局)
+    QSplitter* p_main_splitter = new QSplitter(Qt::Horizontal);
+    p_main_splitter->addWidget(p_name_tree);
+    p_main_splitter->addWidget(p_right_splitter);
+    p_main_splitter->setStretchFactor(1, 1);
 
-    //布局主对话框(两行控件，垂直布局)
-    QVBoxLayout* p_main_layout = new QVBoxLayout;
-    p_main_layout->addLayout(p_top_layout);
-    p_main_layout->addLayout(p_bottom_layout);
-
-    //设定主对话框
-    setLayout(p_main_layout);
+    setCentralWidget(p_main_splitter);
+    //设定主窗口标题与初始大小
+    setWindowTitle(tr("Ein Client"));
+    resize(QSize(800, 400));
 }
 
 //点击消息按钮，读取要发送的消息

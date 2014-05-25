@@ -1,6 +1,6 @@
 #ifndef EINCLIENT_H
 #define EINCLIENT_H
-#include <QDialog>
+#include <QMainWindow>
 #include <string>
 #include "ClientSock.h"
 using std::string;
@@ -10,11 +10,12 @@ class QLabel;
 class QTextEdit;
 class QLineEdit;
 class QPushButton;
+class QTreeWidget;
 //对话框类，在其中实现绝大部分逻辑功能
-class EinClient : public QDialog {
+class EinClient : public QMainWindow {
     Q_OBJECT
 public:
-    EinClient(QWidget* p_parent = 0);
+    EinClient();
 
 public:
     //设定显示消息
@@ -32,11 +33,10 @@ private slots:
 
 private:
     //对话框中各控件
-    QLabel* p_label_disp;
-    QLabel* p_label_send;
     QTextEdit* p_mesg_disp;
     QTextEdit* p_mesg_send;
     QPushButton* p_send_button;
+    QTreeWidget* p_name_tree;
     //存储用户要发送与要显示的消息
     QString m_mesg_disp;
     QString m_mesg_send;
