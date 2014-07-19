@@ -1,18 +1,13 @@
 #include <QtGui>
-#include "EinClient.h"
+#include "DisplayGUI.h"
 #include <iostream>
 using std::string;
 using std::cout;
 using std::endl;
 
-EinClient* EinClient::p_ein_client;
-
 //对话框的构造函数
-EinClient::EinClient()
-    : m_mesg_disp(""), m_mesg_send(""),
-    m_mesg_change("") {
-	p_ein_client = this;
-
+DisplayGUI::DisplayGUI()
+    : m_mesg_disp(""), m_mesg_send(""), m_mesg_change("") {
 	//生成用户姓名树
 	p_name_tree = new QTreeWidget;
 	QString tree_label("name");
@@ -59,17 +54,16 @@ EinClient::EinClient()
 }
 
 //点击消息按钮，读取要发送的消息
-void EinClient::SendClicked() {
+void DisplayGUI::SendClicked() {
     //读取要发送的消息
     m_mesg_send = p_mesg_send->toPlainText();
     p_mesg_send->setText("");
     m_mesg_change = m_mesg_send.toStdString();
     cout<<"UI Send Mesg:"<<m_mesg_change<<endl;
-    m_client_sock.SendMesg(m_mesg_change, SetDispMesgCallback);
 }
 
 //根据消息文本框的内容，更新进程按钮状态
-void EinClient::EnableSendButton() {
+void DisplayGUI::EnableSendButton() {
     //消息文本框不为空
     if(!p_mesg_send->toPlainText().isEmpty()) {
         //进程按钮有效，关闭提示信息
@@ -83,20 +77,14 @@ void EinClient::EnableSendButton() {
 }
 
 //设定显示消息
-void EinClient::SetDispMesg(const string m_mesg) {
+void DisplayGUI::SetDispMesg(const string m_mesg) {
 	m_mesg_disp = m_mesg.c_str();
 	p_mesg_disp->append(m_mesg_disp);
 }
 
-//回调函数
-void EinClient::SetDispMesgCallback(const string m_mesg) {
-	cout<<"UI Receive Mesg:"<<m_mesg<<endl;
-	p_ein_client->SetDispMesg(m_mesg);
-}
-
 //根据错误种类弹出错误提示框
 //其他错误
-void EinClient::ErrorMessage(int num) {
+void DisplayGUI::ErrorMessage(int num) {
     QString error_info;
     switch(num) {
     default:

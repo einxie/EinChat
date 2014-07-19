@@ -2,7 +2,6 @@
 #define EINCLIENT_H
 #include <QMainWindow>
 #include <string>
-#include "ClientSock.h"
 using std::string;
 
 //对应控件的前置声明类
@@ -12,10 +11,10 @@ class QLineEdit;
 class QPushButton;
 class QTreeWidget;
 //对话框类，在其中实现绝大部分逻辑功能
-class EinClient : public QMainWindow {
+class DisplayGUI : public QMainWindow {
     Q_OBJECT
 public:
-    EinClient();
+    DisplayGUI();
 
 public:
     //设定显示消息
@@ -23,8 +22,6 @@ public:
 private:
     //警告信息
     void ErrorMessage(int num);
-    //回调函数
-    static void SetDispMesgCallback(const string m_mesg);
 
 private slots:
     //各按钮对应的槽
@@ -41,10 +38,6 @@ private:
     QString m_mesg_disp;
     QString m_mesg_send;
     string m_mesg_change;
-    //网络借口类
-    ClientSock m_client_sock;
-
-    static EinClient* p_ein_client;
 };
 
 #endif
