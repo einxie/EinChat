@@ -1,4 +1,3 @@
-#include <QtGui>
 #include "DisplayGUI.h"
 #include <iostream>
 using std::string;
@@ -42,15 +41,12 @@ DisplayGUI::DisplayGUI()
     p_right_splitter->setStretchFactor(0, 1);
 
     //布局主切分窗口(两列控件，水平布局)
-    QSplitter* p_main_splitter = new QSplitter(Qt::Horizontal);
-    p_main_splitter->addWidget(p_name_tree);
-    p_main_splitter->addWidget(p_right_splitter);
-    p_main_splitter->setStretchFactor(1, 1);
+//    QSplitter* p_main_splitter = new QSplitter(Qt::Horizontal);
+    this->addWidget(p_name_tree);
+    this->addWidget(p_right_splitter);
+    this->setStretchFactor(1, 1);
 
-    setCentralWidget(p_main_splitter);
-    //设定主窗口标题与初始大小
-    setWindowTitle(tr("Ein Client"));
-    resize(QSize(800, 400));
+//    setCentralWidget(p_main_splitter);
 }
 
 //点击消息按钮，读取要发送的消息

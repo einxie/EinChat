@@ -1,10 +1,10 @@
 #include <QApplication>
-#include "DisplayGUI.h"
+#include "MainWindow.h"
 
 int main(int argc, char** argv) {
     QApplication app(argc, argv);
     //创建主窗口，并显示
-    DisplayGUI* p_main_window = new DisplayGUI;
+    MainWindow* p_main_window = new MainWindow;
     p_main_window->show();
 
     return app.exec();
