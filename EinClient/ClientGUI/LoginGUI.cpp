@@ -71,7 +71,7 @@ void LoginGUI::EnableLoginButton()
     }
 }
 
-//点击消息按钮，读取要发送的消息
+//点击登录按钮，发送登录信息
 void LoginGUI::LoginClicked()
 {
     //读取要发送的消息

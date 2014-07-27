@@ -17,21 +17,15 @@ public:
 
 public:
     //设定显示消息
-    void SetDispMesg(const std::string m_mesg);
+    void SetDispMesg(QTextEdit* p_te, const std::string& m_mesg);
 private:
     //警告信息
     void ErrorMessage(int num);
 
-private slots:
-    //各按钮对应的槽
-    void SendClicked();
-    void EnableSendButton();
-
 private:
     //对话框中各控件
-    QTextEdit* p_mesg_disp;
-    QTextEdit* p_mesg_send;
-    QPushButton* p_send_button;
+    QTextEdit* p_te_config;
+    QTextEdit* p_te_history;
     QTreeWidget* p_name_tree;
 };
 

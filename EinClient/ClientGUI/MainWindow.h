@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include "LoginGUI.h"
 #include "DisplayGUI.h"
+#include "MessageGUI.h"
 
 //主窗口类
 class MainWindow : public QMainWindow {
@@ -14,6 +15,7 @@ private:
     //主窗口上的对话框
     LoginGUI* p_login_gui;
     DisplayGUI* p_display_gui;
+    MessageGUI* p_message_gui;
 };
 
 #endif
