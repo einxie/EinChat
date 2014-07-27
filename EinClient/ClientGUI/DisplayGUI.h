@@ -9,7 +9,8 @@ class QLineEdit;
 class QPushButton;
 class QTreeWidget;
 //对话框类，在其中实现绝大部分逻辑功能
-class DisplayGUI : public QSplitter {
+class DisplayGUI : public QSplitter
+{
     Q_OBJECT
 public:
     DisplayGUI();
