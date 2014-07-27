@@ -1,12 +1,15 @@
 #include "DisplayGUI.h"
+#include <QLabel>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QTreeWidget>
+#include <QMessageBox>
+
 #include <iostream>
-using std::string;
-using std::cout;
-using std::endl;
 
 //对话框的构造函数
-DisplayGUI::DisplayGUI()
-    : m_mesg_disp(""), m_mesg_send(""), m_mesg_change("") {
+DisplayGUI::DisplayGUI() {
 	//生成用户姓名树
 	p_name_tree = new QTreeWidget;
 	QString tree_label("name");
@@ -16,8 +19,8 @@ DisplayGUI::DisplayGUI()
     p_mesg_disp = new QTextEdit;
     p_mesg_send = new QTextEdit;
     p_mesg_disp->setReadOnly(TRUE);
-    p_mesg_disp->setText(m_mesg_disp);
-    p_mesg_send->setText(m_mesg_send);
+    p_mesg_disp->setText("");
+    p_mesg_send->setText("");
 
     //生成发送按钮
     p_send_button = new QPushButton(tr("&Send"));
@@ -41,21 +44,19 @@ DisplayGUI::DisplayGUI()
     p_right_splitter->setStretchFactor(0, 1);
 
     //布局主切分窗口(两列控件，水平布局)
-//    QSplitter* p_main_splitter = new QSplitter(Qt::Horizontal);
+    this->setOrientation(Qt::Horizontal);
     this->addWidget(p_name_tree);
     this->addWidget(p_right_splitter);
     this->setStretchFactor(1, 1);
-
-//    setCentralWidget(p_main_splitter);
 }
 
 //点击消息按钮，读取要发送的消息
 void DisplayGUI::SendClicked() {
     //读取要发送的消息
-    m_mesg_send = p_mesg_send->toPlainText();
+    QString t_mesg_send = p_mesg_send->toPlainText();
     p_mesg_send->setText("");
-    m_mesg_change = m_mesg_send.toStdString();
-    cout<<"UI Send Mesg:"<<m_mesg_change<<endl;
+    std::cout<<"UI Send Mesg:"<<t_mesg_send.toStdString()<<std::endl;
+    SetDispMesg(t_mesg_send.toStdString());
 }
 
 //根据消息文本框的内容，更新进程按钮状态
@@ -73,9 +74,8 @@ void DisplayGUI::EnableSendButton() {
 }
 
 //设定显示消息
-void DisplayGUI::SetDispMesg(const string m_mesg) {
-	m_mesg_disp = m_mesg.c_str();
-	p_mesg_disp->append(m_mesg_disp);
+void DisplayGUI::SetDispMesg(const std::string m_mesg) {
+	p_mesg_disp->append(m_mesg.c_str());
 }
 
 //根据错误种类弹出错误提示框

@@ -1,10 +1,8 @@
 #ifndef DISPLAYGUI_H
 #define DISPLAYGUI_H
-#include <QtGui>
+#include <QSplitter>
 #include <string>
-using std::string;
 
-//对应控件的前置声明类
 class QLabel;
 class QTextEdit;
 class QLineEdit;
@@ -18,7 +16,7 @@ public:
 
 public:
     //设定显示消息
-    void SetDispMesg(const string m_mesg);
+    void SetDispMesg(const std::string m_mesg);
 private:
     //警告信息
     void ErrorMessage(int num);
@@ -34,10 +32,6 @@ private:
     QTextEdit* p_mesg_send;
     QPushButton* p_send_button;
     QTreeWidget* p_name_tree;
-    //存储用户要发送与要显示的消息
-    QString m_mesg_disp;
-    QString m_mesg_send;
-    string m_mesg_change;
 };
 
 #endif
