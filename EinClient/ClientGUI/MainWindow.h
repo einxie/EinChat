@@ -10,6 +10,9 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     MainWindow();
+    void ReceiveMessage(const std::string& m_mesg);
+    void OperateLoginRes(int result);
+    void OperateShowRes(int result);
 
 private:
     //主窗口上的对话框

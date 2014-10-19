@@ -14,3 +14,16 @@
 
 extern const char* local_ip;
 
+enum
+{
+	CLIENT_MESSAGE_LOGIN = 1,
+};
+
+enum
+{
+	SERVER_MESSAGE_LOGIN_RES = 1,
+	SERVER_MESSAGE_SHOW_RES = 2,
+};
+
+#define RES_SUCCESS		1
+#define RES_FAIL		2
